@@ -1,0 +1,7183 @@
+<!DOCTYPE html>
+
+
+
+<html lang="id">
+
+
+
+ <head>
+
+
+
+  <meta charset="utf-8"/>
+
+
+
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+
+
+  <title>Our Memories — Happy Birthday ♡</title>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+
+
+<style>
+
+
+
+:root
+
+
+
+{
+
+
+
+    --pink:#f6c6d7;
+
+
+
+    --rose:#d982a2;
+
+
+
+    --rose-dark:#b66f8a;
+
+
+
+    --ink:#725260;
+
+
+
+    --cream:#fffafd;
+
+
+
+    --soft-shadow:0 14px 36px rgba(180,112,140,.15)
+
+
+
+}
+
+
+
+*
+
+
+
+{
+
+
+
+    box-sizing:border-box;
+
+
+
+    margin:0;
+
+
+
+    padding:0
+
+
+
+}
+
+
+
+html,body
+
+
+
+{
+
+
+
+    min-height:100%;
+
+
+
+    width:100%
+
+
+
+}
+
+
+
+body
+
+
+
+{
+
+
+
+    font-family:Georgia,"Times New Roman",serif;
+
+
+
+    color:var(--ink);
+
+
+
+    background:#fff8fb;
+
+
+
+    overflow-x:hidden
+
+
+
+}
+
+
+
+button
+
+
+
+{
+
+
+
+    font:inherit;
+
+
+
+    -webkit-tap-highlight-color:transparent
+
+
+
+}
+
+
+
+.screen
+
+
+
+{
+
+
+
+    position:fixed;
+
+
+
+    inset:0;
+
+
+
+    z-index:10;
+
+
+
+    display:flex;
+
+
+
+    align-items:center;
+
+
+
+    justify-content:center;
+
+
+
+    flex-direction:column;
+
+
+
+    padding:24px;
+
+
+
+    overflow-y:auto;
+
+
+
+    background:radial-gradient(circle at 50% 20%,#fff 0,#fff5f9 52%,#f7dce7 100%);
+
+
+
+    transition:opacity .5s ease,visibility .5s ease
+
+
+
+}
+
+
+
+.hidden {
+
+
+
+    display: none !important;
+
+
+
+}
+
+
+
+\#passkey-screen
+
+
+
+{
+
+
+
+    z-index:20;
+
+
+
+    background:radial-gradient(circle at top,#fff 0,#fff4f8 52%,#f3d2e0 100%)
+
+
+
+}
+
+
+
+.pin-container
+
+
+
+{
+
+
+
+    width:min(92vw,350px);
+
+
+
+    padding:32px 25px 27px;
+
+
+
+    border:1px solid #f1c7d7;
+
+
+
+    border-radius:28px;
+
+
+
+    background:rgba(255,255,255,.86);
+
+
+
+    box-shadow:var(--soft-shadow);
+
+
+
+    text-align:center;
+
+
+
+    backdrop-filter:blur(12px);
+
+
+
+    animation:softAppear .8s both
+
+
+
+}
+
+
+
+.pin-flower
+
+
+
+{
+
+
+
+    font-size:35px;
+
+
+
+    margin-bottom:8px;
+
+
+
+    color:var(--rose);
+
+
+
+    animation:heartBeat 2s ease-in-out infinite
+
+
+
+}
+
+
+
+.pin-title
+
+
+
+{
+
+
+
+    font-size:25px;
+
+
+
+    color:var(--rose-dark)
+
+
+
+}
+
+
+
+.pin-subtitle
+
+
+
+{
+
+
+
+    margin:8px 0 20px;
+
+
+
+    font:13px Arial,sans-serif;
+
+
+
+    color:#a7808e
+
+
+
+}
+
+
+
+.pin-dots
+
+
+
+{
+
+
+
+    display:flex;
+
+
+
+    justify-content:center;
+
+
+
+    gap:12px;
+
+
+
+    margin-bottom:22px
+
+
+
+}
+
+
+
+.dot
+
+
+
+{
+
+
+
+    width:12px;
+
+
+
+    height:12px;
+
+
+
+    border:1.5px solid #d88eaa;
+
+
+
+    border-radius:50%;
+
+
+
+    transition:transform .2s,background .2s
+
+
+
+}
+
+
+
+.dot.filled
+
+
+
+{
+
+
+
+    background:#d88eaa;
+
+
+
+    box-shadow:0 0 9px #eab4c9;
+
+
+
+    transform:scale(1.15)
+
+
+
+}
+
+
+
+.numpad
+
+
+
+{
+
+
+
+    display:grid;
+
+
+
+    grid-template-columns:repeat(3,1fr);
+
+
+
+    gap:10px
+
+
+
+}
+
+
+
+.num-btn
+
+
+
+{
+
+
+
+    padding:13px;
+
+
+
+    border:1px solid #f0d1dd;
+
+
+
+    border-radius:16px;
+
+
+
+    background:#fffafd;
+
+
+
+    color:#946477;
+
+
+
+    font-size:19px;
+
+
+
+    cursor:pointer;
+
+
+
+    transition:.2s
+
+
+
+}
+
+
+
+.num-btn:hover
+
+
+
+{
+
+
+
+    background:#fce8f0;
+
+
+
+    transform:translateY(-2px);
+
+
+
+    box-shadow:0 6px 14px #d982a21c
+
+
+
+}
+
+
+
+.num-btn:active
+
+
+
+{
+
+
+
+    transform:scale(.94)
+
+
+
+}
+
+
+
+.pin-hint
+
+
+
+{
+
+
+
+    margin-top:18px;
+
+
+
+    font:11px Arial,sans-serif;
+
+
+
+    color:#bda0ad
+
+
+
+}
+
+
+
+\#giftScreen,#loadingScreen
+
+
+
+{
+
+
+
+    z-index:15
+
+
+
+}
+
+
+
+.gift-title
+
+
+
+{
+
+
+
+    margin-bottom:24px;
+
+
+
+    color:#b56d89;
+
+
+
+    font-size:clamp(16px,3vw,23px);
+
+
+
+    letter-spacing:3px;
+
+
+
+    text-align:center
+
+
+
+}
+
+
+
+.gift
+
+
+
+{
+
+
+
+    display:grid;
+
+
+
+    place-items:center;
+
+
+
+    width:min(290px,72vw);
+
+
+
+    height:min(290px,72vw);
+
+
+
+    cursor:pointer;
+
+
+
+    transition:transform .3s;
+
+
+
+    animation:giftFloat 3s ease-in-out infinite
+
+
+
+}
+
+
+
+.gift:hover
+
+
+
+{
+
+
+
+    transform:scale(1.04)
+
+
+
+}
+
+
+
+.gift-image
+
+
+
+{
+
+
+
+    width:100%;
+
+
+
+    height:100%;
+
+
+
+    object-fit:contain;
+
+
+
+    filter:drop-shadow(0 15px 20px #d58ba855)
+
+
+
+}
+
+
+
+.open-text
+
+
+
+{
+
+
+
+    margin-top:18px;
+
+
+
+    color:#bd91a3;
+
+
+
+    font:11px Arial,sans-serif;
+
+
+
+    letter-spacing:3px
+
+
+
+}
+
+
+
+.loading-title
+
+
+
+{
+
+
+
+    margin-bottom:16px;
+
+
+
+    color:#b56d89;
+
+
+
+    font:11px Arial,sans-serif;
+
+
+
+    letter-spacing:3px
+
+
+
+}
+
+
+
+.loading-bar
+
+
+
+{
+
+
+
+    width:min(280px,75vw);
+
+
+
+    height:5px;
+
+
+
+    border-radius:9px;
+
+
+
+    background:#f1dce5;
+
+
+
+    overflow:hidden
+
+
+
+}
+
+
+
+.loading-progress
+
+
+
+{
+
+
+
+    width:0;
+
+
+
+    height:100%;
+
+
+
+    background:linear-gradient(90deg,#f0b9cd,#d982a2);
+
+
+
+    transition:width .12s
+
+
+
+}
+
+
+
+.loading-percent
+
+
+
+{
+
+
+
+    margin-top:12px;
+
+
+
+    color:#b98b9e;
+
+
+
+    font:12px Arial,sans-serif
+
+
+
+}
+
+
+
+\#galleryScreen
+
+
+
+{
+
+
+
+    position:relative;
+
+
+
+    display:block;
+
+
+
+    min-height:100vh;
+
+
+
+    height:auto;
+
+
+
+    overflow:visible;
+
+
+
+    padding:42px 22px 58px;
+
+
+
+    background:radial-gradient(ellipse at top,#fff 0,#fff8fb 55%,#f8e3eb 100%)
+
+
+
+}
+
+
+
+.gallery-head
+
+
+
+{
+
+
+
+    max-width:650px;
+
+
+
+    margin:0 auto 18px;
+
+
+
+    text-align:center
+
+
+
+}
+
+
+
+.eyebrow
+
+
+
+{
+
+
+
+    color:#c08099;
+
+
+
+    font:10px Arial,sans-serif;
+
+
+
+    letter-spacing:4px;
+
+
+
+    text-transform:uppercase
+
+
+
+}
+
+
+
+.gallery-head h1
+
+
+
+{
+
+
+
+    margin:9px 0;
+
+
+
+    color:#b66f8a;
+
+
+
+    font-size:clamp(34px,6vw,58px);
+
+
+
+    font-weight:normal;
+
+
+
+    font-style:italic
+
+
+
+}
+
+
+
+.gallery-head p
+
+
+
+{
+
+
+
+    color:#a98594;
+
+
+
+    font:13px/1.7 Arial,sans-serif
+
+
+
+}
+
+
+
+.gallery-head .heart
+
+
+
+{
+
+
+
+    color:#d982a2
+
+
+
+}
+
+
+
+.cake-section
+
+
+
+{
+
+
+
+    width:100%;
+
+
+
+    margin:6px auto 36px;
+
+
+
+    text-align:center
+
+
+
+}
+
+
+
+.cake-caption
+
+
+
+{
+
+
+
+    color:#c08099;
+
+
+
+    font:10px Arial,sans-serif;
+
+
+
+    letter-spacing:3px;
+
+
+
+    text-transform:uppercase
+
+
+
+}
+
+
+
+.cake-area
+
+
+
+{
+
+
+
+    width:100%;
+
+
+
+    height:340px;
+
+
+
+    position:relative;
+
+
+
+    display:flex;
+
+
+
+    justify-content:center;
+
+
+
+    align-items:flex-end;
+
+
+
+    margin-top:8px
+
+
+
+}
+
+
+
+.cake
+
+
+
+{
+
+
+
+    position:relative;
+
+
+
+    width:380px;
+
+
+
+    height:330px;
+
+
+
+    margin-bottom:5px;
+
+
+
+    transform-origin:bottom center
+
+
+
+}
+
+
+
+.cake-plate
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    left:50%;
+
+
+
+    bottom:8px;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    width:370px;
+
+
+
+    height:34px;
+
+
+
+    border-radius:50%;
+
+
+
+    background:linear-gradient(to bottom,#fffaff,#f0bfd1);
+
+
+
+    box-shadow:0 15px 25px rgba(167,91,125,.18);
+
+
+
+    z-index:1
+
+
+
+}
+
+
+
+.cake-plate:after
+
+
+
+{
+
+
+
+    content:"";
+
+
+
+    position:absolute;
+
+
+
+    left:50%;
+
+
+
+    top:7px;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    width:315px;
+
+
+
+    height:14px;
+
+
+
+    border-radius:50%;
+
+
+
+    background:#ffe3ed
+
+
+
+}
+
+
+
+.cake-body
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    left:50%;
+
+
+
+    bottom:39px;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    width:310px;
+
+
+
+    height:135px;
+
+
+
+    border-radius:12px 12px 27px 27px;
+
+
+
+    background:linear-gradient(90deg,#e99bb8,#ffd3e2,#e99bb8);
+
+
+
+    box-shadow:inset 0 -8px 15px rgba(160,67,106,.1),0 12px 22px rgba(167,91,125,.16);
+
+
+
+    z-index:3
+
+
+
+}
+
+
+
+.cake-top
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    left:50%;
+
+
+
+    bottom:145px;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    width:330px;
+
+
+
+    height:78px;
+
+
+
+    border-radius:50%;
+
+
+
+    background:#f5b9d0;
+
+
+
+    z-index:6;
+
+
+
+    box-shadow:0 5px 10px rgba(167,91,125,.12)
+
+
+
+}
+
+
+
+.cake-top:before
+
+
+
+{
+
+
+
+    content:"";
+
+
+
+    position:absolute;
+
+
+
+    left:12px;
+
+
+
+    top:9px;
+
+
+
+    width:306px;
+
+
+
+    height:57px;
+
+
+
+    border-radius:50%;
+
+
+
+    background:#fff8fb
+
+
+
+}
+
+
+
+.cake-top:after
+
+
+
+{
+
+
+
+    content:"";
+
+
+
+    position:absolute;
+
+
+
+    left:48px;
+
+
+
+    top:20px;
+
+
+
+    width:234px;
+
+
+
+    height:36px;
+
+
+
+    border-radius:50%;
+
+
+
+    background:#ffe4ed
+
+
+
+}
+
+
+
+.cream
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    top:3px;
+
+
+
+    background:#fffafd;
+
+
+
+    border-radius:0 0 20px 20px;
+
+
+
+    z-index:9
+
+
+
+}
+
+
+
+.cream.c1
+
+
+
+{
+
+
+
+    left:18px;
+
+
+
+    width:42px;
+
+
+
+    height:31px
+
+
+
+}
+
+
+
+.cream.c2
+
+
+
+{
+
+
+
+    left:72px;
+
+
+
+    width:45px;
+
+
+
+    height:45px
+
+
+
+}
+
+
+
+.cream.c3
+
+
+
+{
+
+
+
+    left:133px;
+
+
+
+    width:42px;
+
+
+
+    height:28px
+
+
+
+}
+
+
+
+.cream.c4
+
+
+
+{
+
+
+
+    left:193px;
+
+
+
+    width:45px;
+
+
+
+    height:42px
+
+
+
+}
+
+
+
+.cream.c5
+
+
+
+{
+
+
+
+    right:19px;
+
+
+
+    width:42px;
+
+
+
+    height:31px
+
+
+
+}
+
+
+
+.cake-heart
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    z-index:10;
+
+
+
+    font-size:22px;
+
+
+
+    filter:drop-shadow(0 2px 2px #bd789544)
+
+
+
+}
+
+
+
+.ch1
+
+
+
+{
+
+
+
+    left:65px;
+
+
+
+    bottom:48px
+
+
+
+}
+
+
+
+.ch2
+
+
+
+{
+
+
+
+    left:50%;
+
+
+
+    bottom:76px;
+
+
+
+    transform:translateX(-50%)
+
+
+
+}
+
+
+
+.ch3
+
+
+
+{
+
+
+
+    right:65px;
+
+
+
+    bottom:48px
+
+
+
+}
+
+
+
+.strawberry
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    z-index:15;
+
+
+
+    font-size:29px;
+
+
+
+    filter:drop-shadow(0 4px 4px rgba(150,75,110,.18));
+
+
+
+    animation:berryFloat 2.5s ease-in-out infinite
+
+
+
+}
+
+
+
+.s1
+
+
+
+{
+
+
+
+    left:35px;
+
+
+
+    bottom:205px
+
+
+
+}
+
+
+
+.s2
+
+
+
+{
+
+
+
+    left:94px;
+
+
+
+    bottom:220px;
+
+
+
+    animation-delay:.2s
+
+
+
+}
+
+
+
+.s3
+
+
+
+{
+
+
+
+    right:94px;
+
+
+
+    bottom:220px;
+
+
+
+    animation-delay:.4s
+
+
+
+}
+
+
+
+.s4
+
+
+
+{
+
+
+
+    right:35px;
+
+
+
+    bottom:205px;
+
+
+
+    animation-delay:.6s
+
+
+
+}
+
+
+
+@keyframes berryFloat
+
+
+
+{
+
+
+
+    0%,100%
+
+
+
+    {
+
+
+
+        transform:translateY(0) rotate(-3deg)
+
+
+
+    }
+
+
+
+    50%
+
+
+
+    {
+
+
+
+        transform:translateY(-5px) rotate(3deg)
+
+
+
+    }
+
+
+
+}
+
+
+
+.candle
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    left:50%;
+
+
+
+    bottom:225px;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    width:22px;
+
+
+
+    height:68px;
+
+
+
+    background:repeating-linear-gradient(90deg,#fff 0 7px,#e88fb0 7px 14px);
+
+
+
+    border-radius:5px;
+
+
+
+    box-shadow:0 4px 8px rgba(150,75,110,.2);
+
+
+
+    z-index:50;
+
+
+
+    animation:candleSway 2.4s ease-in-out infinite
+
+
+
+}
+
+
+
+.candle:after
+
+
+
+{
+
+
+
+    content:"";
+
+
+
+    position:absolute;
+
+
+
+    left:50%;
+
+
+
+    top:-8px;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    width:4px;
+
+
+
+    height:9px;
+
+
+
+    background:#57404b;
+
+
+
+    border-radius:3px
+
+
+
+}
+
+
+
+.flame
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    left:50%;
+
+
+
+    top:-35px;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    transform-origin:50% 90%;
+
+
+
+    width:20px;
+
+
+
+    height:29px;
+
+
+
+    background:radial-gradient(ellipse at center bottom,#fff 0%,#fff7ad 25%,#ffd21c 50%,#ff8a00 75%,#ff5b00 100%);
+
+
+
+    border-radius:50% 50% 45% 45%;
+
+
+
+    box-shadow:0 0 8px #ffd000,0 0 18px #ffb000,0 0 28px #ffae0080;
+
+
+
+    z-index:51;
+
+
+
+    animation:flameNatural .22s ease-in-out infinite alternate
+
+
+
+}
+
+
+
+.blow-candle-btn
+
+
+
+{
+
+
+
+    margin:5px auto 0;
+
+
+
+    border:1px solid #efc1d2;
+
+
+
+    border-radius:999px;
+
+
+
+    padding:11px 20px;
+
+
+
+    color:#a75f7b;
+
+
+
+    background:#fff;
+
+
+
+    box-shadow:0 7px 18px rgba(180,112,140,.12);
+
+
+
+    cursor:pointer;
+
+
+
+    transition:transform .2s,background .2s
+
+
+
+}
+
+
+
+.blow-candle-btn:hover
+
+
+
+{
+
+
+
+    transform:translateY(-2px);
+
+
+
+    background:#fff0f6
+
+
+
+}
+
+
+
+.candle-message
+
+
+
+{
+
+
+
+    margin-top:9px;
+
+
+
+    color:#b78a9b;
+
+
+
+    font:12px/1.5 Arial,sans-serif
+
+
+
+}
+
+
+
+.candle.blown-out .flame
+
+
+
+{
+
+
+
+    opacity:0;
+
+
+
+    transform:translateX(-50%) scale(.2);
+
+
+
+    animation:none
+
+
+
+}
+
+
+
+.candle.blown-out:before
+
+
+
+{
+
+
+
+    content:"〰";
+
+
+
+    position:absolute;
+
+
+
+    top:-35px;
+
+
+
+    left:50%;
+
+
+
+    transform:translateX(-50%);
+
+
+
+    color:#c6aab5;
+
+
+
+    font:22px Arial,sans-serif;
+
+
+
+    animation:smokeFade 1.4s ease-out forwards
+
+
+
+}
+
+
+
+@keyframes smokeFade
+
+
+
+{
+
+
+
+    from
+
+
+
+    {
+
+
+
+        opacity:.9;
+
+
+
+        transform:translate(-50%,0) scale(.7)
+
+
+
+    }
+
+
+
+    to
+
+
+
+    {
+
+
+
+        opacity:0;
+
+
+
+        transform:translate(-50%,-24px) scale(1.4)
+
+
+
+    }
+
+
+
+}
+
+
+
+@keyframes flameNatural
+
+
+
+{
+
+
+
+    from
+
+
+
+    {
+
+
+
+        transform:translateX(-50%) rotate(-4deg) scale(.94,1)
+
+
+
+    }
+
+
+
+    to
+
+
+
+    {
+
+
+
+        transform:translateX(-50%) rotate(4deg) scale(1.06,1.08)
+
+
+
+    }
+
+
+
+}
+
+
+
+@keyframes candleSway
+
+
+
+{
+
+
+
+    0%,100%
+
+
+
+    {
+
+
+
+        rotate:0deg
+
+
+
+    }
+
+
+
+    50%
+
+
+
+    {
+
+
+
+        rotate:.5deg
+
+
+
+    }
+
+
+
+}
+
+
+
+.gift.opening
+
+
+
+{
+
+
+
+    animation:giftOpenMove .85s cubic-bezier(.2,.8,.2,1) both
+
+
+
+}
+
+
+
+.gift.opening .gift-image
+
+
+
+{
+
+
+
+    animation:giftImageWiggle .22s ease-in-out 3
+
+
+
+}
+
+
+
+@keyframes giftOpenMove
+
+
+
+{
+
+
+
+    0%
+
+
+
+    {
+
+
+
+        transform:scale(1) rotate(0)
+
+
+
+    }
+
+
+
+    18%
+
+
+
+    {
+
+
+
+        transform:scale(1.08) rotate(-7deg)
+
+
+
+    }
+
+
+
+    36%
+
+
+
+    {
+
+
+
+        transform:scale(1.1) rotate(7deg)
+
+
+
+    }
+
+
+
+    54%
+
+
+
+    {
+
+
+
+        transform:scale(1.12) rotate(-5deg)
+
+
+
+    }
+
+
+
+    72%
+
+
+
+    {
+
+
+
+        transform:scale(1.16) rotate(4deg)
+
+
+
+    }
+
+
+
+    100%
+
+
+
+    {
+
+
+
+        transform:scale(.15) rotate(18deg);
+
+
+
+        opacity:0
+
+
+
+    }
+
+
+
+}
+
+
+
+@keyframes giftImageWiggle
+
+
+
+{
+
+
+
+    0%,100%
+
+
+
+    {
+
+
+
+        transform:rotate(0)
+
+
+
+    }
+
+
+
+    50%
+
+
+
+    {
+
+
+
+        transform:rotate(5deg) scale(1.03)
+
+
+
+    }
+
+
+
+}
+
+
+
+@keyframes giftFloat
+
+
+
+{
+
+
+
+    0%,100%
+
+
+
+    {
+
+
+
+        translate:0 0
+
+
+
+    }
+
+
+
+    50%
+
+
+
+    {
+
+
+
+        translate:0 -9px
+
+
+
+    }
+
+
+
+}
+
+
+
+.polaroid-grid
+
+
+
+{
+
+
+
+    width:min(1120px,100%);
+
+
+
+    margin:auto;
+
+
+
+    display:grid;
+
+
+
+    grid-template-columns:repeat(5,minmax(0,1fr));
+
+
+
+    gap:28px 20px;
+
+
+
+    align-items:start
+
+
+
+}
+
+
+
+.polaroid
+
+
+
+{
+
+
+
+    position:relative;
+
+
+
+    min-width:0;
+
+
+
+    padding:10px 10px 38px;
+
+
+
+    background:#fff;
+
+
+
+    box-shadow:0 8px 18px #94647724,0 2px 5px #94647714;
+
+
+
+    transform:rotate(var(--tilt));
+
+
+
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;
+
+
+
+    cursor:pointer;
+
+
+
+    animation:appear .65s both
+
+
+
+}
+
+
+
+.polaroid:nth-child(3n)
+
+
+
+{
+
+
+
+    animation-delay:.08s
+
+
+
+}
+
+
+
+.polaroid:nth-child(3n+1)
+
+
+
+{
+
+
+
+    animation-delay:.16s
+
+
+
+}
+
+
+
+.polaroid:hover
+
+
+
+{
+
+
+
+    z-index:3;
+
+
+
+    transform:rotate(0) translateY(-7px) scale(1.04);
+
+
+
+    box-shadow:0 18px 30px #94647735
+
+
+
+}
+
+
+
+.polaroid img
+
+
+
+{
+
+
+
+    display:block;
+
+
+
+    width:100%;
+
+
+
+    aspect-ratio:4/4.7;
+
+
+
+    object-fit:cover;
+
+
+
+    background:#f9eaf0;
+
+
+
+    transition:filter .3s
+
+
+
+}
+
+
+
+.polaroid:hover img
+
+
+
+{
+
+
+
+    filter:brightness(1.035)
+
+
+
+}
+
+
+
+.polaroid figcaption
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    bottom:10px;
+
+
+
+    left:4px;
+
+
+
+    right:4px;
+
+
+
+    overflow:hidden;
+
+
+
+    color:#9b7182;
+
+
+
+    font-size:clamp(11px,1.2vw,14px);
+
+
+
+    font-style:italic;
+
+
+
+    text-align:center;
+
+
+
+    text-overflow:ellipsis;
+
+
+
+    white-space:nowrap
+
+
+
+}
+
+
+
+.polaroid:before
+
+
+
+{
+
+
+
+    content:"";
+
+
+
+    position:absolute;
+
+
+
+    top:-7px;
+
+
+
+    left:50%;
+
+
+
+    width:45px;
+
+
+
+    height:14px;
+
+
+
+    transform:translateX(-50%) rotate(-4deg);
+
+
+
+    background:#f5d8e3b8;
+
+
+
+    box-shadow:0 1px 2px #b78b9a20
+
+
+
+}
+
+
+
+.gallery-footer
+
+
+
+{
+
+
+
+    margin:38px 0 0;
+
+
+
+    color:#bc8298;
+
+
+
+    font-size:14px;
+
+
+
+    text-align:center
+
+
+
+}
+
+
+
+.gallery-footer span
+
+
+
+{
+
+
+
+    display:block;
+
+
+
+    margin-top:8px;
+
+
+
+    color:#c49eac;
+
+
+
+    font:10px Arial,sans-serif;
+
+
+
+    letter-spacing:2px
+
+
+
+}
+
+
+
+.modal
+
+
+
+{
+
+
+
+    position:fixed;
+
+
+
+    inset:0;
+
+
+
+    z-index:30;
+
+
+
+    display:none;
+
+
+
+    align-items:center;
+
+
+
+    justify-content:center;
+
+
+
+    padding:22px;
+
+
+
+    background:#7653658c;
+
+
+
+    backdrop-filter:blur(7px)
+
+
+
+}
+
+
+
+.modal.active
+
+
+
+{
+
+
+
+    display:flex
+
+
+
+}
+
+
+
+.modal-card
+
+
+
+{
+
+
+
+    position:relative;
+
+
+
+    width:min(380px,90vw);
+
+
+
+    padding:15px 15px 22px;
+
+
+
+    background:#fff;
+
+
+
+    border-radius:8px;
+
+
+
+    box-shadow:0 20px 70px #5c334755;
+
+
+
+    text-align:center;
+
+
+
+    transform:rotate(-1deg);
+
+
+
+    animation:softAppear .3s both
+
+
+
+}
+
+
+
+.modal-card img
+
+
+
+{
+
+
+
+    width:100%;
+
+
+
+    max-height:55vh;
+
+
+
+    object-fit:contain;
+
+
+
+    background:#fff7fa
+
+
+
+}
+
+
+
+.modal-card h2
+
+
+
+{
+
+
+
+    margin:13px 0 7px;
+
+
+
+    color:#b66f8a;
+
+
+
+    font-weight:normal;
+
+
+
+    font-style:italic
+
+
+
+}
+
+
+
+.modal-card p
+
+
+
+{
+
+
+
+    color:#9b7b89;
+
+
+
+    font:13px/1.6 Arial,sans-serif
+
+
+
+}
+
+
+
+.close-btn
+
+
+
+{
+
+
+
+    position:absolute;
+
+
+
+    right:-12px;
+
+
+
+    top:-15px;
+
+
+
+    width:32px;
+
+
+
+    height:32px;
+
+
+
+    border:0;
+
+
+
+    border-radius:50%;
+
+
+
+    background:#fff;
+
+
+
+    color:#b66f8a;
+
+
+
+    font-size:23px;
+
+
+
+    cursor:pointer;
+
+
+
+    box-shadow:0 3px 12px #71485a30
+
+
+
+}
+
+
+
+@keyframes appear
+
+
+
+{
+
+
+
+    from
+
+
+
+    {
+
+
+
+        opacity:0;
+
+
+
+        transform:translateY(18px) rotate(var(--tilt))
+
+
+
+    }
+
+
+
+    to
+
+
+
+    {
+
+
+
+        opacity:1;
+
+
+
+        transform:rotate(var(--tilt))
+
+
+
+    }
+
+
+
+}
+
+
+
+\#playlistScreen
+
+
+
+{
+
+
+
+    z-index:18
+
+
+
+}
+
+
+
+.playlist-panel
+
+
+
+{
+
+
+
+    width:min(94vw,520px);
+
+
+
+    padding:clamp(22px,5vw,34px);
+
+
+
+    border:1px solid #f0c7d7;
+
+
+
+    border-radius:28px;
+
+
+
+    background:rgba(255,255,255,.9);
+
+
+
+    box-shadow:var(--soft-shadow);
+
+
+
+    animation:softAppear .8s both
+
+
+
+}
+
+
+
+.playlist-kicker
+
+
+
+{
+
+
+
+    text-align:center;
+
+
+
+    color:#c18a9e;
+
+
+
+    font:10px Arial,sans-serif;
+
+
+
+    letter-spacing:3px;
+
+
+
+    margin-bottom:9px
+
+
+
+}
+
+
+
+.playlist-title
+
+
+
+{
+
+
+
+    text-align:center;
+
+
+
+    color:#ad6b84;
+
+
+
+    font-size:clamp(25px,5vw,34px);
+
+
+
+    margin-bottom:7px
+
+
+
+}
+
+
+
+.playlist-desc
+
+
+
+{
+
+
+
+    text-align:center;
+
+
+
+    font:13px/1.6 Arial,sans-serif;
+
+
+
+    color:#a88b96;
+
+
+
+    margin-bottom:22px
+
+
+
+}
+
+
+
+.track-list
+
+
+
+{
+
+
+
+    display:grid;
+
+
+
+    gap:11px
+
+
+
+}
+
+
+
+.track
+
+
+
+{
+
+
+
+    display:flex;
+
+
+
+    align-items:center;
+
+
+
+    gap:13px;
+
+
+
+    padding:12px;
+
+
+
+    border:1px solid #f4dce5;
+
+
+
+    background:#fffafd;
+
+
+
+    border-radius:18px;
+
+
+
+    transition:transform .25s,box-shadow .25s
+
+
+
+}
+
+
+
+.track:hover
+
+
+
+{
+
+
+
+    transform:translateY(-3px);
+
+
+
+    box-shadow:0 9px 20px #d982a21c
+
+
+
+}
+
+
+
+.track-cover
+
+
+
+{
+
+
+
+    position:relative;
+
+
+
+    overflow:hidden;
+
+
+
+    flex:0 0 62px;
+
+
+
+    width:62px;
+
+
+
+    height:62px;
+
+
+
+    border-radius:16px;
+
+
+
+    background:#f8dce7;
+
+
+
+    box-shadow:0 5px 14px #d982a226
+
+
+
+}
+
+
+
+.track-cover img
+
+
+
+{
+
+
+
+    display:block;
+
+
+
+    width:100%;
+
+
+
+    height:100%;
+
+
+
+    object-fit:cover;
+
+
+
+    transition:transform .4s
+
+
+
+}
+
+
+
+.track:hover .track-cover img
+
+
+
+{
+
+
+
+    transform:scale(1.08)
+
+
+
+}
+
+
+
+.track-info
+
+
+
+{
+
+
+
+    flex:1;
+
+
+
+    min-width:0
+
+
+
+}
+
+
+
+.track-name
+
+
+
+{
+
+
+
+    font-size:15px;
+
+
+
+    color:#87596c;
+
+
+
+    margin-bottom:4px
+
+
+
+}
+
+
+
+.track-artist
+
+
+
+{
+
+
+
+    font:11px Arial,sans-serif;
+
+
+
+    color:#b59aa5
+
+
+
+}
+
+
+
+.track-play
+
+
+
+{
+
+
+
+    flex:0 0 40px;
+
+
+
+    width:40px;
+
+
+
+    height:40px;
+
+
+
+    border:0;
+
+
+
+    border-radius:50%;
+
+
+
+    background:#eebdce;
+
+
+
+    color:#fff;
+
+
+
+    font-size:17px;
+
+
+
+    cursor:pointer;
+
+
+
+    box-shadow:0 4px 12px #d982a244;
+
+
+
+    transition:transform .25s,background .25s
+
+
+
+}
+
+
+
+.track-play:hover
+
+
+
+{
+
+
+
+    background:#d982a2;
+
+
+
+    transform:scale(1.04)
+
+
+
+}
+
+
+
+.track-status
+
+
+
+{
+
+
+
+    min-height:17px;
+
+
+
+    text-align:center;
+
+
+
+    margin:14px 0 10px;
+
+
+
+    font:11px Arial,sans-serif;
+
+
+
+    color:#b57b91
+
+
+
+}
+
+
+
+.playlist-next,.letter-next
+
+
+
+{
+
+
+
+    width:100%;
+
+
+
+    border:0;
+
+
+
+    border-radius:15px;
+
+
+
+    padding:14px 18px;
+
+
+
+    color:white;
+
+
+
+    background:#d982a2;
+
+
+
+    cursor:pointer;
+
+
+
+    box-shadow:0 8px 18px #d982a233;
+
+
+
+    transition:transform .25s,background .25s
+
+
+
+}
+
+
+
+.playlist-next:hover,.letter-next:hover
+
+
+
+{
+
+
+
+    background:#c66f91;
+
+
+
+    transform:translateY(-2px)
+
+
+
+}
+
+
+
+\#giftScreen
+
+
+
+{
+
+
+
+    z-index:17
+
+
+
+}
+
+
+
+\#letterScreen
+
+
+
+{
+
+
+
+    z-index:30;
+
+
+
+    background:rgba(255,245,249,.96)
+
+
+
+}
+
+
+
+.letter-card
+
+
+
+{
+
+
+
+    width:min(92vw,600px);
+
+
+
+    max-height:82vh;
+
+
+
+    overflow:auto;
+
+
+
+    padding:clamp(22px,5vw,38px);
+
+
+
+    background:#fffafd;
+
+
+
+    border:1px solid #f0c7d7;
+
+
+
+    border-radius:26px;
+
+
+
+    box-shadow:0 20px 60px #9e607322;
+
+
+
+    animation:softAppear .8s both
+
+
+
+}
+
+
+
+.letter-emoji
+
+
+
+{
+
+
+
+    text-align:center;
+
+
+
+    font-size:34px;
+
+
+
+    margin-bottom:8px
+
+
+
+}
+
+
+
+.letter-title
+
+
+
+{
+
+
+
+    text-align:center;
+
+
+
+    color:#ad6b84;
+
+
+
+    font-size:clamp(24px,5vw,32px);
+
+
+
+    margin-bottom:18px
+
+
+
+}
+
+
+
+.letter-body
+
+
+
+{
+
+
+
+    white-space:pre-line;
+
+
+
+    color:#80616e;
+
+
+
+    font-size:15px;
+
+
+
+    line-height:1.9
+
+
+
+}
+
+
+
+.letter-next
+
+
+
+{
+
+
+
+    margin-top:22px
+
+
+
+}
+
+
+
+@keyframes softAppear
+
+
+
+{
+
+
+
+    from
+
+
+
+    {
+
+
+
+        opacity:0;
+
+
+
+        transform:translateY(20px) scale(.97)
+
+
+
+    }
+
+
+
+    to
+
+
+
+    {
+
+
+
+        opacity:1;
+
+
+
+        transform:translateY(0) scale(1)
+
+
+
+    }
+
+
+
+}
+
+
+
+@keyframes heartBeat
+
+
+
+{
+
+
+
+    0%,100%
+
+
+
+    {
+
+
+
+        transform:scale(1)
+
+
+
+    }
+
+
+
+    50%
+
+
+
+    {
+
+
+
+        transform:scale(1.12)
+
+
+
+    }
+
+
+
+}
+
+
+
+@media(max-width:900px)
+
+
+
+{
+
+
+
+    .polaroid-grid
+
+
+
+    {
+
+
+
+        grid-template-columns:repeat(3,minmax(0,1fr));
+
+
+
+        gap:22px 17px
+
+
+
+    }
+
+
+
+}
+
+
+
+@media(max-width:600px)
+
+
+
+{
+
+
+
+    #galleryScreen
+
+
+
+    {
+
+
+
+        padding:32px 14px 42px
+
+
+
+    }
+
+
+
+    .polaroid-grid
+
+
+
+    {
+
+
+
+        grid-template-columns:repeat(2,minmax(0,1fr));
+
+
+
+        gap:23px 13px
+
+
+
+    }
+
+
+
+    .polaroid
+
+
+
+    {
+
+
+
+        padding:7px 7px 32px
+
+
+
+    }
+
+
+
+    .polaroid figcaption
+
+
+
+    {
+
+
+
+        bottom:8px;
+
+
+
+        font-size:11px
+
+
+
+    }
+
+
+
+    .gallery-head
+
+
+
+    {
+
+
+
+        margin-bottom:16px
+
+
+
+    }
+
+
+
+    .gallery-head p
+
+
+
+    {
+
+
+
+        font-size:12px
+
+
+
+    }
+
+
+
+    .cake-section
+
+
+
+    {
+
+
+
+        margin-bottom:26px
+
+
+
+    }
+
+
+
+    .cake-area
+
+
+
+    {
+
+
+
+        height:290px;
+
+
+
+        overflow:hidden
+
+
+
+    }
+
+
+
+    .cake
+
+
+
+    {
+
+
+
+        transform:scale(.78);
+
+
+
+        transform-origin:bottom center;
+
+
+
+        margin-bottom:0
+
+
+
+    }
+
+
+
+    .track
+
+
+
+    {
+
+
+
+        gap:10px;
+
+
+
+        padding:10px
+
+
+
+    }
+
+
+
+    .track-cover
+
+
+
+    {
+
+
+
+        flex-basis:52px;
+
+
+
+        width:52px;
+
+
+
+        height:52px
+
+
+
+    }
+
+
+
+    .track-name
+
+
+
+    {
+
+
+
+        font-size:13px
+
+
+
+    }
+
+
+
+}
+
+
+
+@media(max-width:380px)
+
+
+
+{
+
+
+
+    .cake-area
+
+
+
+    {
+
+
+
+        height:255px
+
+
+
+    }
+
+
+
+    .cake
+
+
+
+    {
+
+
+
+        transform:scale(.68)
+
+
+
+    }
+
+
+
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+
+
+
+    *, *::before, *::after {
+
+
+
+        animation-duration: .01ms !important;
+
+
+
+        animation-iteration-count: 1 !important;
+
+
+
+        scroll-behavior: auto !important;
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+.flower-bouquet {
+
+
+
+    grid-column: 1 / -1;
+
+
+
+    justify-self: center;
+
+
+
+    position: relative;
+
+
+
+    width: 190px;
+
+
+
+    min-height: 190px;
+
+
+
+    display: flex;
+
+
+
+    flex-direction: column;
+
+
+
+    align-items: center;
+
+
+
+    justify-content: center;
+
+
+
+    gap: 8px;
+
+
+
+    margin: 12px auto;
+
+
+
+    border: 1px solid #f1c7d7;
+
+
+
+    border-radius: 24px;
+
+
+
+    background: rgba(255,255,255,.9);
+
+
+
+    box-shadow: 0 10px 28px #d982a233;
+
+
+
+    cursor: pointer;
+
+
+
+    z-index: 5;
+
+
+
+    transition: transform .3s;
+
+
+
+}
+
+
+
+
+
+
+
+.flower-bouquet:hover {
+
+
+
+    transform: scale(1.06) rotate(-2deg);
+
+
+
+}
+
+
+
+
+
+
+
+.bouquet-emoji {
+
+
+
+    font-size: 76px;
+
+
+
+    animation: bouquetFloat 2s ease-in-out infinite;
+
+
+
+    filter: drop-shadow(0 5px 8px #d982a244);
+
+
+
+}
+
+
+
+
+
+
+
+.bouquet-caption {
+
+
+
+    color: #b66f8a;
+
+
+
+    font: italic 13px Georgia, serif;
+
+
+
+}
+
+
+
+
+
+
+
+.bouquet-hint {
+
+
+
+    color: #d49aaf;
+
+
+
+    font: 10px Arial, sans-serif;
+
+
+
+    letter-spacing: 2px;
+
+
+
+}
+
+
+
+
+
+
+
+@keyframes bouquetFloat {
+
+
+
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+
+
+
+    50% { transform: translateY(-7px) rotate(4deg); }
+
+
+
+}
+
+
+
+
+
+
+
+.flying-flower {
+
+
+
+    position: fixed;
+
+
+
+    z-index: 99999;
+
+
+
+    pointer-events: none;
+
+
+
+    font-size: 25px;
+
+
+
+    animation: flowerBurst 1.5s cubic-bezier(.15,.7,.3,1) forwards;
+
+
+
+}
+
+
+
+
+
+
+
+@keyframes flowerBurst {
+
+
+
+    0% {
+
+
+
+        opacity: 1;
+
+
+
+        transform: translate(-50%, -50%) scale(.3) rotate(0);
+
+
+
+    }
+
+
+
+    70% { opacity: 1; }
+
+
+
+    100% {
+
+
+
+        opacity: 0;
+
+
+
+        transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)))
+
+
+
+            scale(1.3) rotate(var(--rotation));
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+@media (prefers-reduced-motion: reduce) {
+
+
+
+    .bouquet-emoji { animation: none; }
+
+
+
+    .flying-flower { animation-duration: .5s; }
+
+
+
+}
+
+
+
+
+
+/* Mini music player — tampil seperti pemutar musik sungguhan */
+
+#nowPlaying {
+
+  position: fixed;
+
+  z-index: 9999;
+
+  left: 18px;
+
+  bottom: 18px;
+
+  width: min(370px, calc(100vw - 36px));
+
+  display: grid;
+
+  grid-template-columns: 58px minmax(0, 1fr) 38px;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px;
+
+  border: 1px solid rgba(217,130,162,.38);
+
+  border-radius: 20px;
+
+  background: rgba(255,250,253,.94);
+
+  box-shadow: 0 14px 38px rgba(125,65,91,.22);
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform: translateY(18px) scale(.97);
+
+  pointer-events: none;
+
+  transition: opacity .3s ease, transform .3s ease, visibility .3s;
+
+}
+
+#nowPlaying.visible {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transform: translateY(0) scale(1);
+
+  pointer-events: auto;
+
+}
+
+.now-playing-art {
+
+  width: 58px;
+
+  height: 58px;
+
+  border-radius: 13px;
+
+  overflow: hidden;
+
+  background: linear-gradient(135deg,#f6c6d7,#d982a2,#fff0f6);
+
+  box-shadow: 0 5px 14px rgba(180,112,140,.2);
+
+}
+
+.now-playing-art img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+#nowPlaying.playing .now-playing-art img {
+
+  animation: albumBreath 3s ease-in-out infinite;
+
+}
+
+@keyframes albumBreath {
+
+  0%,100% { transform: scale(1); }
+
+  50% { transform: scale(1.06); }
+
+}
+
+.now-playing-main { min-width: 0; }
+
+.now-playing-label {
+
+  margin-bottom: 3px;
+
+  color: #c08099;
+
+  font: 9px Arial,sans-serif;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+}
+
+#nowPlayingTitle {
+
+  overflow: hidden;
+
+  color: #87596c;
+
+  font-size: 14px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+}
+
+#nowPlayingArtist {
+
+  margin-top: 3px;
+
+  overflow: hidden;
+
+  color: #b59aa5;
+
+  font: 10px Arial,sans-serif;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+}
+
+.now-playing-timeline {
+
+  display: grid;
+
+  grid-template-columns: 30px minmax(0,1fr) 30px;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-top: 8px;
+
+  color: #b18b9a;
+
+  font: 9px Arial,sans-serif;
+
+  font-variant-numeric: tabular-nums;
+
+}
+
+#musicProgress {
+
+  width: 100%;
+
+  height: 4px;
+
+  margin: 0;
+
+  accent-color: #d982a2;
+
+  cursor: pointer;
+
+}
+
+#nowPlayingToggle {
+
+  width: 38px;
+
+  height: 38px;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg,#e9a9c0,#c87595);
+
+  color: white;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 13px rgba(217,130,162,.3);
+
+}
+
+#nowPlayingToggle:hover { transform: scale(1.06); }
+
+@media(max-width:480px) {
+
+  #nowPlaying { left: 12px; bottom: 12px; width: calc(100vw - 24px); }
+
+}
+
+
+
+
+/* Playlist dengan layout referensi, tetap memakai tema pink asli */
+#playlistScreen {
+  color:var(--ink);
+  background:radial-gradient(ellipse at 50% 8%,#fff 0%,#fff5f9 42%,#f4d8e4 100%);
+  overflow-y:auto;
+  padding:22px 14px;
+}
+#playlistScreen:before {
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.45;
+  background-image:radial-gradient(1px 1px at 12% 22%,#d982a2 98%,transparent),radial-gradient(1px 1px at 77% 18%,#f0b6cb 98%,transparent),radial-gradient(1px 1px at 22% 78%,#d982a2 98%,transparent),radial-gradient(1px 1px at 88% 72%,#f0b6cb 98%,transparent),radial-gradient(1px 1px at 50% 92%,#fff 98%,transparent);
+  background-size:180px 180px,230px 230px,200px 200px,260px 260px,150px 150px;
+}
+.playlist-panel {
+  position:relative;z-index:1;width:min(94vw,396px);padding:19px 17px 16px;
+  border:1px solid rgba(217,130,162,.35);border-radius:25px;
+  background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(255,241,247,.94) 58%,rgba(250,225,235,.97));
+  box-shadow:0 25px 75px rgba(155,83,112,.18),inset 0 1px 0 rgba(255,255,255,.8);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:softAppear .7s both;
+}
+.playlist-topline{display:flex;justify-content:space-between;color:#c08099;font:700 8px Arial,sans-serif;letter-spacing:2px;margin:0 1px 17px}
+.playlist-hero{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:center;margin-bottom:15px}
+.playlist-feature-cover{width:120px;height:120px;border-radius:13px;overflow:hidden;background:#f6c6d7;box-shadow:0 10px 25px #b66f8a30}
+.playlist-feature-cover img{width:100%;height:100%;display:block;object-fit:cover}
+.playlist-feature-info{min-width:0}
+.playlist-kicker{color:#c08099;text-align:left;font:700 7px Arial,sans-serif;letter-spacing:2px;margin-bottom:8px}
+.playlist-title{font:normal clamp(21px,5vw,27px)/1.08 Arial,sans-serif;color:#87596c;text-align:left;margin:0 0 8px;letter-spacing:-.8px}
+.playlist-title span{color:#d982a2}
+.playlist-desc{font:9px/1.5 Arial,sans-serif;color:#a98594;text-align:left;margin:0 0 8px}
+.playlist-current{display:flex;align-items:center;gap:7px;color:#ad6b84;font:9px Arial,sans-serif}
+.equalizer{font-size:16px;color:#d982a2}
+.track-list{display:grid;gap:6px}
+.track{min-width:0;gap:9px;padding:7px 9px;border:1px solid transparent;border-radius:12px;background:rgba(255,255,255,.52);transition:.2s}
+.track:hover,.track:has(.track-play:focus-visible){background:#fce8f0;border-color:#efc1d2}
+.track-cover{flex:0 0 34px;width:34px;height:34px;border-radius:7px;background:#f6dce6;box-shadow:none}
+.track-number{flex:0 0 17px;color:#c49eac;font:8px Arial,sans-serif}
+.track-name{color:#87596c;font:10px Arial,sans-serif;margin-bottom:3px}
+.track-artist{color:#b59aa5;font:8px Arial,sans-serif}
+.track-play{flex:0 0 25px;width:25px;height:25px;background:transparent;color:#c87595;box-shadow:none;font-size:12px}
+.track-play:hover{background:#f3d3e0;color:#a75f7b;transform:scale(1.06)}
+.track-status{color:#b57b91;font:9px Arial,sans-serif;min-height:13px;margin:9px 0 3px}
+.playlist-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin:4px 0 11px}
+.playlist-controls button{border:0;background:transparent;color:#b66f8a;font:30px Arial,sans-serif;cursor:pointer;line-height:1;padding:2px 4px}
+.playlist-controls .playlist-main-play{display:grid;place-items:center;width:43px;height:43px;border-radius:50%;background:#fffafd;color:#a75f7b;font-size:17px;box-shadow:0 5px 18px #d982a244;border:1px solid #f1c7d7}
+.playlist-timeline{display:grid;grid-template-columns:28px minmax(0,1fr) 28px;gap:7px;align-items:center;color:#b18b9a;font:8px Arial,sans-serif;margin:0 0 13px}
+#playlistProgress{width:100%;height:3px;margin:0;accent-color:#d982a2;cursor:pointer}
+.playlist-next{padding:13px 12px;border-radius:11px;background:#d982a2;color:white;font:700 9px Arial,sans-serif;letter-spacing:1.2px;box-shadow:0 5px 16px #d982a233}
+.playlist-next:hover{background:#c66f91;transform:translateY(-1px)}
+#nowPlaying{display:none!important}
+@media(max-width:420px){.playlist-panel{padding:16px 13px}.playlist-hero{grid-template-columns:100px minmax(0,1fr);gap:11px}.playlist-feature-cover{width:100px;height:100px}.playlist-title{font-size:22px}.playlist-desc{font-size:8px}}
+
+</style>
+
+
+
+ </head>
+
+
+
+ <body>
+
+
+
+  <section class="screen" id="passkey-screen">
+
+
+
+   <div class="pin-container">
+
+
+
+    <div class="pin-flower">
+
+
+
+     ♡
+
+
+
+    </div>
+
+
+
+    <div class="pin-title">
+
+
+
+     For My Favorite Person
+
+
+
+    </div>
+
+
+
+    <div class="pin-subtitle">
+
+
+
+     Masukkan kode rahasia
+
+
+
+    </div>
+
+
+
+    <div class="pin-dots" id="pinDots">
+
+
+
+     <span class="dot">
+
+
+
+     </span>
+
+
+
+     <span class="dot">
+
+
+
+     </span>
+
+
+
+     <span class="dot">
+
+
+
+     </span>
+
+
+
+     <span class="dot">
+
+
+
+     </span>
+
+
+
+    </div>
+
+
+
+    <div class="numpad">
+
+
+
+     <button class="num-btn" onclick="pressKey('1')">
+
+
+
+      1
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('2')">
+
+
+
+      2
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('3')">
+
+
+
+      3
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('4')">
+
+
+
+      4
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('5')">
+
+
+
+      5
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('6')">
+
+
+
+      6
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('7')">
+
+
+
+      7
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('8')">
+
+
+
+      8
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('9')">
+
+
+
+      9
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('clear')">
+
+
+
+      ⌫
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('0')">
+
+
+
+      0
+
+
+
+     </button>
+
+
+
+     <button class="num-btn" onclick="pressKey('enter')">
+
+
+
+      &crarr;
+
+
+
+     </button>
+
+
+
+    </div>
+
+
+
+    <div class="pin-hint">
+
+
+
+     Hint: tahun lahir aku ✨
+
+
+
+    </div>
+
+
+
+   </div>
+
+
+
+  </section>
+
+
+
+  <section class="screen hidden" id="playlistScreen">
+  <div class="playlist-panel">
+    <div class="playlist-topline"><span>✦ SPECIAL PLAYLIST</span><span>2026</span></div>
+    <div class="playlist-hero">
+      <div class="playlist-feature-cover"><img id="playlistHeroCover" src="cover3.jpg" alt="Cover playlist" onerror="this.style.opacity='.2'"></div>
+      <div class="playlist-feature-info">
+        <div class="playlist-kicker">A LITTLE SOUNDTRACK FOR YOU</div>
+        <h1 class="playlist-title">Little Playlist <span>♡</span></h1>
+        <p class="playlist-desc">Pilih lagu yang ingin kamu dengarkan. Semoga tiap lagu bikin kamu senyum, ya.</p>
+        <div class="playlist-current"><span class="equalizer">▥</span><span id="playlistCurrentName">About You</span></div>
+      </div>
+    </div>
+    <div class="track-list">
+      <article class="track">
+        <span class="track-number">01</span>
+        <div class="track-cover"><img alt="Cover lagu pertama" onerror="this.style.opacity='.25'" src="cover.jpg"></div>
+        <div class="track-info"><div class="track-name">Kasih Putih</div><div class="track-artist">Glenn Fredly</div></div>
+        <button aria-label="Putar Kasih Putih" class="track-play" onclick="playTrack(0)">▶</button>
+      </article>
+      <article class="track">
+        <span class="track-number">02</span>
+        <div class="track-cover"><img alt="Cover lagu kedua" onerror="this.style.opacity='.25'" src="cover2.jpg"></div>
+        <div class="track-info"><div class="track-name">Dunia Yang Nanti</div><div class="track-artist">Raim Laode</div></div>
+        <button aria-label="Putar Dunia Yang Nanti" class="track-play" onclick="playTrack(1)">▶</button>
+      </article>
+      <article class="track">
+        <span class="track-number">03</span>
+        <div class="track-cover"><img alt="Cover lagu ketiga" onerror="this.style.opacity='.25'" src="cover3.jpg"></div>
+        <div class="track-info"><div class="track-name">About You</div><div class="track-artist">The 1975</div></div>
+        <button aria-label="Putar About You" class="track-play" onclick="playTrack(2)">▶</button>
+      </article>
+    </div>
+    <div class="track-status" id="trackStatus">Pilih lagu untuk memulai playlist ♡</div>
+    <div class="playlist-controls">
+      <button type="button" aria-label="Lagu sebelumnya" onclick="changeTrack(-1)">‹</button>
+      <button type="button" class="playlist-main-play" aria-label="Putar atau jeda" onclick="togglePlaylistPlayback()" id="playlistMainPlay">▶</button>
+      <button type="button" aria-label="Lagu berikutnya" onclick="changeTrack(1)">›</button>
+    </div>
+    <div class="playlist-timeline"><span id="playlistTimeNow">0:00</span><input id="playlistProgress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posisi lagu"><span id="playlistTimeEnd">0:00</span></div>
+    <button class="playlist-next" onclick="goToGift()">Lanjut membuka kado ♡</button>
+  </div>
+  <audio id="song0" preload="metadata" src="lagu1.mp3"></audio>
+  <audio id="song1" preload="metadata" src="lagu2.mp3"></audio>
+  <audio id="song2" preload="none" src="lagu3.mp3"></audio>
+</section>
+
+<section class="screen hidden" id="giftScreen">
+
+
+
+   <div class="gift-title">
+
+
+
+    A LITTLE GIFT FOR YOU
+
+
+
+   </div>
+
+
+
+   <div class="gift" id="gift">
+
+
+
+    <img alt="Foto kado" class="gift-image" src="kado.png"/>
+
+
+
+   </div>
+
+
+
+   <div class="open-text">
+
+
+
+    TAP TO OPEN
+
+
+
+   </div>
+
+
+
+  </section>
+
+
+
+  <section class="screen hidden" id="letterScreen">
+
+
+
+   <article class="letter-card">
+
+
+
+    <div class="letter-emoji">
+
+
+
+     💌🎀
+
+
+
+    </div>
+
+
+
+    <h2 class="letter-title">
+     A Letter Just For You ♡
+    </h2>
+    <div class="letter-body">
+    🎂🎀🤍
+    happy birthday to my favorite person, one of the best people in my life. thanks for being part of my life and making so many moments worth remembering. i hope life treats u kindly, all ur wishes come true, and we never become strangers. stay happy always, u deserve nothing but the best. enjoy ur day.
+🎀🧸💗✨
+    </div>
+
+
+
+    <button class="letter-next" onclick="continueToMemories()">
+
+
+
+     Ayo make a wish ♡
+
+
+
+    </button>
+
+
+
+   </article>
+
+
+
+  </section>
+
+
+
+  <section class="screen hidden" id="loadingScreen">
+
+
+
+   <div class="loading-title">
+
+
+
+    PREPARING YOUR MEMORIES
+
+
+
+   </div>
+
+
+
+   <div class="loading-bar">
+
+
+
+    <div class="loading-progress" id="progress">
+
+
+
+    </div>
+
+
+
+   </div>
+
+
+
+   <div class="loading-percent" id="percent">
+
+
+
+    0%
+
+
+
+   </div>
+
+
+
+  </section>
+
+
+
+  <main class="hidden" id="galleryScreen">
+
+
+
+   <header class="gallery-head">
+
+
+
+    <div class="eyebrow">
+
+
+
+     a little collection of us
+
+
+
+    </div>
+
+
+
+    <h1>
+
+
+
+     Our Memories
+
+
+
+     <span class="heart">
+
+
+
+      ♡
+
+
+
+     </span>
+
+
+
+    </h1>
+
+
+
+    <p>
+
+
+
+     Sepuluh potongan kecil dari cerita yang selalu ingin aku simpan.
+
+
+
+    </p>
+
+
+
+   </header>
+
+
+
+   <section aria-label="Kue ulang tahun" class="cake-section">
+
+
+
+    <div class="cake-caption">
+
+
+
+     a little birthday cake ♡
+
+
+
+    </div>
+
+
+
+    <div class="cake-area">
+
+
+
+     <div class="cake">
+
+
+
+      <div class="cake-plate">
+
+
+
+      </div>
+
+
+
+      <div class="cake-body">
+
+
+
+       <div class="cream c1">
+
+
+
+       </div>
+
+
+
+       <div class="cream c2">
+
+
+
+       </div>
+
+
+
+       <div class="cream c3">
+
+
+
+       </div>
+
+
+
+       <div class="cream c4">
+
+
+
+       </div>
+
+
+
+       <div class="cream c5">
+
+
+
+       </div>
+
+
+
+       <span class="cake-heart ch1">
+
+
+
+        🍓
+
+
+
+       </span>
+
+
+
+       <span class="cake-heart ch2">
+
+
+
+        ♡
+
+
+
+       </span>
+
+
+
+       <span class="cake-heart ch3">
+
+
+
+        🍓
+
+
+
+       </span>
+
+
+
+      </div>
+
+
+
+      <div class="cake-top">
+
+
+
+      </div>
+
+
+
+      <div class="strawberry s1">
+
+
+
+       🍓
+
+
+
+      </div>
+
+
+
+      <div class="strawberry s2">
+
+
+
+       ⚪
+
+
+
+      </div>
+
+
+
+      <div class="strawberry s3">
+
+
+
+       ⚪
+
+
+
+      </div>
+
+
+
+      <div class="strawberry s4">
+
+
+
+       🍓
+
+
+
+      </div>
+
+
+
+      <div class="candle">
+
+
+
+       <div class="flame">
+
+
+
+       </div>
+
+
+
+      </div>
+
+
+
+     </div>
+
+
+
+    </div>
+
+
+
+    <button class="blow-candle-btn" id="blowCandleBtn" onclick="blowOutCandle()" type="button">
+
+
+
+     🌬️ Tiup lilinnya
+
+
+
+    </button>
+
+
+
+    <p class="candle-message" id="candleMessage">
+
+
+
+     Tutup mata, buat permohonan, lalu tiup lilinnya ♡
+
+
+
+    </p>
+
+
+
+   </section>
+
+
+
+<section aria-label="10 foto kenangan" class="polaroid-grid" id="polaroidGrid">
+
+
+
+    <div class="flower-bouquet" id="flowerBouquet" role="button" tabindex="0" aria-label="Klik buket bunga">
+
+
+
+        <div class="bouquet-emoji">💐</div>
+
+
+
+        <div class="bouquet-caption">a little flower for you ♡</div>
+
+
+
+        <div class="bouquet-hint">✧ tap me ✧</div>
+
+
+
+    </div>
+
+
+
+</section>
+
+
+
+  <div class="modal" id="modal" onclick="if(event.target===this)closeCard()">
+
+
+
+   <div class="modal-card">
+
+
+
+    <button class="close-btn" onclick="closeCard()">
+
+
+
+     &times;
+
+
+
+    </button>
+
+
+
+    <img alt="Foto kenangan" id="modalImage"/>
+
+
+
+    <h2 id="modalTitle">
+
+
+
+    </h2>
+
+
+
+    <p id="modalMessage">
+
+
+
+    </p>
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+
+
+<aside id="nowPlaying" aria-label="Pemutar musik mini">
+
+  <div class="now-playing-art">
+
+    <img id="nowPlayingCover" src="cover.jpg" alt="Cover lagu yang sedang diputar" onerror="this.style.display='none'">
+
+  </div>
+
+  <div class="now-playing-main">
+
+    <div class="now-playing-label">NOW PLAYING ♡</div>
+
+    <div id="nowPlayingTitle">Pilih lagu</div>
+
+    <div id="nowPlayingArtist">Little Playlist</div>
+
+    <div class="now-playing-timeline">
+
+      <span id="musicCurrentTime">0:00</span>
+
+      <input id="musicProgress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posisi lagu">
+
+      <span id="musicDuration">0:00</span>
+
+    </div>
+
+  </div>
+
+  <button id="nowPlayingToggle" type="button" aria-label="Jeda lagu" onclick="toggleMiniPlayer()">Ⅱ</button>
+
+</aside>
+
+
+
+<script>
+
+
+
+const CORRECT_PIN="2006";
+
+
+
+let enteredPin="";
+
+
+
+const passkey=document.getElementById("passkey-screen"),playlistScreen=document.getElementById("playlistScreen"),giftScreen=document.getElementById("giftScreen"),letterScreen=document.getElementById("letterScreen"),loadingScreen=document.getElementById("loadingScreen"),gallery=document.getElementById("galleryScreen");
+
+
+
+let activeSong=-1;
+
+
+
+const songNames = ["Kasih Putih", "Dunia Yang Nanti", "About You"];
+
+const songArtists = ["Glenn Fredly", "Raim Laode", "The 1975"];
+
+const songCovers = ["cover.jpg", "cover2.jpg", "cover3.jpg"];
+
+const songElements = [
+
+    document.getElementById("song0"),
+
+    document.getElementById("song1"),
+
+    document.getElementById("song2")
+
+];
+
+const miniPlayer = document.getElementById("nowPlaying");
+
+const miniCover = document.getElementById("nowPlayingCover");
+
+const miniTitle = document.getElementById("nowPlayingTitle");
+
+const miniArtist = document.getElementById("nowPlayingArtist");
+
+const miniToggle = document.getElementById("nowPlayingToggle");
+
+const musicProgress = document.getElementById("musicProgress");
+
+const musicCurrentTime = document.getElementById("musicCurrentTime");
+
+const musicDuration = document.getElementById("musicDuration");
+
+
+
+const playlistHeroCover = document.getElementById("playlistHeroCover");
+const playlistCurrentName = document.getElementById("playlistCurrentName");
+const playlistProgress = document.getElementById("playlistProgress");
+const playlistTimeNow = document.getElementById("playlistTimeNow");
+const playlistTimeEnd = document.getElementById("playlistTimeEnd");
+const playlistMainPlay = document.getElementById("playlistMainPlay");
+
+function changeTrack(direction) {
+    const next = activeSong < 0 ? (direction > 0 ? 0 : songElements.length - 1) : (activeSong + direction + songElements.length) % songElements.length;
+    playTrack(next);
+}
+function togglePlaylistPlayback() {
+    if (activeSong < 0) { playTrack(2); return; }
+    toggleMiniPlayer();
+}
+
+function formatMusicTime(seconds) {
+
+    if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+
+    const mins = Math.floor(seconds / 60);
+
+    const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+
+    return mins + ":" + secs;
+
+}
+
+
+
+function updateMiniPlayer(index) {
+
+    // Sinkronkan cover besar dan nama lagu yang sedang dipilih.
+    if (playlistHeroCover) playlistHeroCover.src = songCovers[index];
+    if (playlistCurrentName) playlistCurrentName.textContent = songNames[index];
+    if (playlistMainPlay) playlistMainPlay.textContent = songElements[index].paused ? "▶" : "Ⅱ";
+
+    miniCover.src = songCovers[index];
+
+    miniTitle.textContent = songNames[index];
+
+    miniArtist.textContent = songArtists[index];
+
+    miniPlayer.classList.add("visible");
+
+    miniToggle.textContent = songElements[index].paused ? "▶" : "Ⅱ";
+
+    miniToggle.setAttribute("aria-label", songElements[index].paused ? "Putar lagu" : "Jeda lagu");
+
+    miniPlayer.classList.toggle("playing", !songElements[index].paused);
+
+    const song = songElements[index];
+
+    musicCurrentTime.textContent = formatMusicTime(song.currentTime);
+
+    musicDuration.textContent = formatMusicTime(song.duration);
+
+    musicProgress.value = song.duration ? (song.currentTime / song.duration) * 100 : 0;
+
+    if (playlistTimeNow) playlistTimeNow.textContent = formatMusicTime(song.currentTime);
+    if (playlistTimeEnd) playlistTimeEnd.textContent = formatMusicTime(song.duration);
+    if (playlistProgress) playlistProgress.value = song.duration ? (song.currentTime / song.duration) * 100 : 0;
+
+}
+
+
+
+function playTrack(index) {
+
+    const status = document.getElementById("trackStatus");
+
+    const buttons = [...document.querySelectorAll(".track-play")];
+
+    const song = songElements[index];
+
+
+
+    if (activeSong === index && !song.paused) {
+
+        song.pause();
+
+        buttons[index].textContent = "▶";
+
+        status.textContent = "Lagu dijeda. Tekan ▶ lagi untuk melanjutkan.";
+
+        updateMiniPlayer(index);
+
+        return;
+
+    }
+
+
+
+    songElements.forEach((otherSong, i) => {
+
+        if (i !== index) {
+
+            otherSong.pause();
+
+            otherSong.currentTime = 0;
+
+            buttons[i].textContent = "▶";
+
+        }
+
+    });
+
+
+
+    activeSong = index;
+
+    // Ganti cover besar seketika saat lagu diklik.
+    if (playlistHeroCover) playlistHeroCover.src = songCovers[index];
+    if (playlistCurrentName) playlistCurrentName.textContent = songNames[index];
+    if (playlistMainPlay) playlistMainPlay.textContent = "Ⅱ";
+
+    miniCover.src = songCovers[index];
+
+    miniTitle.textContent = songNames[index];
+
+    miniArtist.textContent = songArtists[index];
+
+    miniPlayer.classList.add("visible");
+
+
+
+    song.play().then(() => {
+
+        buttons[index].textContent = "Ⅱ";
+
+        status.textContent = "Sedang diputar: " + songNames[index] + " ♫";
+
+        updateMiniPlayer(index);
+
+    }).catch(() => {
+
+        buttons[index].textContent = "▶";
+
+        status.textContent = "File audio belum ditemukan. Pastikan lagu" + (index + 1) + ".mp3 ada di folder HTML.";
+
+        updateMiniPlayer(index);
+
+    });
+
+
+
+    song.onended = () => {
+
+        buttons[index].textContent = "▶";
+
+        status.textContent = "Lagu selesai diputar ♡";
+
+        miniPlayer.classList.remove("playing");
+
+        miniToggle.textContent = "▶";
+
+        miniToggle.setAttribute("aria-label", "Putar lagu");
+
+        musicProgress.value = 100;
+
+    };
+
+}
+
+
+
+function toggleMiniPlayer() {
+
+    if (activeSong < 0) return;
+
+    const song = songElements[activeSong];
+
+    if (song.paused) {
+
+        song.play().then(() => {
+
+            document.querySelectorAll(".track-play")[activeSong].textContent = "Ⅱ";
+
+            updateMiniPlayer(activeSong);
+
+        }).catch(() => {
+
+            document.getElementById("trackStatus").textContent = "Audio belum bisa diputar. Periksa file lagu.";
+
+        });
+
+    } else {
+
+        song.pause();
+
+        document.querySelectorAll(".track-play")[activeSong].textContent = "▶";
+
+        updateMiniPlayer(activeSong);
+
+    }
+
+}
+
+
+
+songElements.forEach((song, index) => {
+
+    song.addEventListener("timeupdate", () => {
+
+        if (activeSong === index) updateMiniPlayer(index);
+
+    });
+
+    song.addEventListener("loadedmetadata", () => {
+
+        if (activeSong === index) updateMiniPlayer(index);
+
+    });
+
+    song.addEventListener("play", () => {
+
+        if (activeSong === index) updateMiniPlayer(index);
+
+    });
+
+    song.addEventListener("pause", () => {
+
+        if (activeSong === index) updateMiniPlayer(index);
+
+    });
+
+});
+
+
+
+playlistProgress.addEventListener("input", () => {
+    if (activeSong < 0) return;
+    const song = songElements[activeSong];
+    if (Number.isFinite(song.duration) && song.duration > 0) song.currentTime = (Number(playlistProgress.value) / 100) * song.duration;
+});
+
+musicProgress.addEventListener("input", () => {
+
+    if (activeSong < 0) return;
+
+    const song = songElements[activeSong];
+
+    if (Number.isFinite(song.duration) && song.duration > 0) {
+
+        song.currentTime = (Number(musicProgress.value) / 100) * song.duration;
+
+    }
+
+});
+
+
+
+function goToGift()
+
+
+
+{
+
+
+
+    playlistScreen.classList.add("hidden");
+
+
+
+    giftScreen.classList.remove("hidden");
+
+
+
+}
+
+
+
+function celebrateMemories(originY=.65)
+
+
+
+{
+
+
+
+    if(typeof confetti!=="function")return;
+
+
+
+    const colors=["#f6c6d7","#d982a2","#ffffff","#f7a8c8"];
+
+
+
+    confetti(
+
+
+
+    {
+
+
+
+        particleCount:90,spread:75,startVelocity:34,origin:
+
+
+
+        {
+
+
+
+            x:.5,y:originY
+
+
+
+        }
+
+
+
+        ,colors,ticks:180,scalar:.9
+
+
+
+    }
+
+
+
+    );
+
+
+
+    setTimeout(()=>
+
+
+
+    {
+
+
+
+        confetti(
+
+
+
+        {
+
+
+
+            particleCount:45,spread:110,startVelocity:23,origin:
+
+
+
+            {
+
+
+
+                x:.25,y:originY
+
+
+
+            }
+
+
+
+            ,colors,ticks:150
+
+
+
+        }
+
+
+
+        );confetti(
+
+
+
+        {
+
+
+
+            particleCount:45,spread:110,startVelocity:23,origin:
+
+
+
+            {
+
+
+
+                x:.75,y:originY
+
+
+
+            }
+
+
+
+            ,colors,ticks:150
+
+
+
+        }
+
+
+
+        );
+
+
+
+    }
+
+
+
+    ,220);
+
+
+
+}
+
+
+
+function continueToMemories()
+
+
+
+{
+
+
+
+    letterScreen.classList.add("hidden");
+
+
+
+    loadingScreen.classList.remove("hidden");
+
+
+
+    let v=0;
+
+
+
+    const timer=setInterval(()=>
+
+
+
+    {
+
+
+
+        v=Math.min(100,v+Math.random()*8+3);document.getElementById("progress").style.width=v+"%";document.getElementById("percent").textContent=Math.floor(v)+"%";if(v>=100)
+
+
+
+        {
+
+
+
+            clearInterval(timer);setTimeout(()=>
+
+
+
+            {
+
+
+
+                loadingScreen.classList.add("hidden");gallery.classList.remove("hidden");
+
+
+
+            }
+
+
+
+            ,350);
+
+
+
+        }
+
+
+
+    }
+
+
+
+    ,100);
+
+
+
+}
+
+
+
+const dots=[...document.querySelectorAll(".dot")];
+
+
+
+function pressKey(key)
+
+
+
+{
+
+
+
+    if(key==="clear")enteredPin=enteredPin.slice(0,-1);
+
+
+
+    else if(key==="enter")
+
+
+
+    {
+
+
+
+        verifyPin();
+
+
+
+        return;
+
+
+
+    }
+
+
+
+    else if(enteredPin.length<4)enteredPin+=key;
+
+
+
+    dots.forEach((d,i)=>d.classList.toggle("filled",i<enteredPin.length));
+
+
+
+    if(enteredPin.length===4&&key!=="clear")setTimeout(verifyPin,180);
+
+
+
+}
+
+
+
+function verifyPin()
+
+
+
+{
+
+
+
+    if(enteredPin===CORRECT_PIN)
+
+
+
+    {
+
+
+
+        passkey.classList.add("hidden");
+
+
+
+        setTimeout(()=>
+
+
+
+        {
+
+
+
+            passkey.style.display="none";playlistScreen.classList.remove("hidden");
+
+
+
+        }
+
+
+
+        ,500);
+
+
+
+    }
+
+
+
+    else
+
+
+
+    {
+
+
+
+        dots.forEach(d=>
+
+
+
+        {
+
+
+
+            d.style.background="#e6a0b8";setTimeout(()=>d.style.background="",350);
+
+
+
+        }
+
+
+
+        );
+
+
+
+        enteredPin="";
+
+
+
+        setTimeout(()=>dots.forEach(d=>d.classList.remove("filled")),350);
+
+
+
+    }
+
+
+
+}
+
+
+
+document.addEventListener("keydown",e=>
+
+
+
+{
+
+
+
+    if(!passkey.classList.contains("hidden"))
+
+
+
+    {
+
+
+
+        if(/^\d$/.test(e.key))pressKey(e.key);if(e.key==="Backspace")pressKey("clear");if(e.key==="Enter")pressKey("enter");
+
+
+
+    }
+
+
+
+    if(e.key==="Escape")closeCard();
+
+
+
+}
+
+
+
+);
+
+
+
+document.getElementById("gift").addEventListener("click",()=>
+
+
+
+{
+
+
+
+    const gift=document.getElementById("gift");if(gift.classList.contains("opening"))return;gift.classList.add("opening");celebrateMemories(.55);document.querySelector("#giftScreen .open-text").textContent="OPENING YOUR GIFT ♡";setTimeout(()=>
+
+
+
+    {
+
+
+
+        giftScreen.classList.add("hidden");letterScreen.classList.remove("hidden");gift.classList.remove("opening");document.querySelector("#giftScreen .open-text").textContent="TAP TO OPEN";
+
+
+
+    }
+
+
+
+    ,850);
+
+
+
+}
+
+
+
+);
+
+
+
+function blowOutCandle()
+
+
+
+{
+
+
+
+    const candle=document.querySelector(".candle"),btn=document.getElementById("blowCandleBtn"),message=document.getElementById("candleMessage");
+
+
+
+    if(!candle.classList.contains("blown-out"))
+
+
+
+    {
+
+
+
+        candle.classList.add("blown-out");
+
+
+
+        celebrateMemories(.68);
+
+
+
+        btn.textContent="✨ Nyalakan lilin lagi";
+
+
+
+        message.textContent="Yeay! Semoga semua harapan baikmu terkabul ♡";
+
+
+
+    }
+
+
+
+    else
+
+
+
+    {
+
+
+
+        candle.classList.remove("blown-out");
+
+
+
+        btn.textContent="🌬️ Tiup lilinnya";
+
+
+
+        message.textContent="Tutup mata, buat permohonan, lalu tiup lilinnya ♡";
+
+
+
+    }
+
+
+
+}
+
+
+
+const items=[
+
+
+
+{
+
+
+
+    image:"foto1.jpeg",title:"The Beginning",message:"Awal cerita yang selalu aku syukuri."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto2.jpeg",title:"Little Moments",message:"Hal sederhana yang jadi kenangan berharga."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto3.jpeg",title:"Sweet Girl",message:"my prettiest always."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto4.jpeg",title:"My Favorite",message:"Salah satu foto favoritku tentang kita."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto5.jpeg",title:"A Sweet Memory",message:"Satu lagi kenangan kecil untuk disimpan."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto6.jpeg",title:"My Happy Place",message:"Momen kecil yang selalu bikin aku senyum."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto7.jpeg",title:"Prettiest Always",message:"i love you."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto8.jpeg",title:"Forever Memory",message:"Kenangan ini akan selalu punya tempat spesial."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto9.jpeg",title:"My sunshine",message:"Terima kasih sudah jadi bagian indah dari ceritaku."
+
+
+
+}
+
+
+
+,
+
+
+
+{
+
+
+
+    image:"foto10.jpeg",title:"Always, Love",message:"Semoga kita punya banyak kenangan baik lagi."
+
+
+
+}
+
+
+
+];
+
+
+
+const grid=document.getElementById("polaroidGrid");
+
+
+
+items.forEach((item,i)=>
+
+
+
+{
+
+
+
+    const figure=document.createElement("figure");figure.className="polaroid";figure.style.setProperty("--tilt",`${[-3,2,-1,3,-2,1,2,-3,1,-1][i]}deg`);const img=document.createElement("img");img.src=item.image;img.alt=`Foto kenangan ${i+1}`;img.onerror=()=>
+
+
+
+    {
+
+
+
+        img.onerror=null;img.alt="Foto tidak ditemukan: "+item.image;img.style.objectFit="contain";img.style.padding="12px";img.style.background="#fff0f5";
+
+
+
+    }
+
+
+
+    ;const cap=document.createElement("figcaption");cap.textContent=item.title;figure.append(img,cap);figure.addEventListener("click",()=>openCard(i));grid.appendChild(figure);
+
+
+
+}
+
+
+
+);
+
+
+
+function openCard(i)
+
+
+
+{
+
+
+
+    const item=items[i],img=document.getElementById("modalImage");
+
+
+
+    img.src=item.image;
+
+
+
+    img.onerror=()=>
+
+
+
+    {
+
+
+
+        img.alt="Foto tidak ditemukan: "+item.image;
+
+
+
+    }
+
+
+
+    ;
+
+
+
+    document.getElementById("modalTitle").textContent=item.title;
+
+
+
+    document.getElementById("modalMessage").textContent=item.message;
+
+
+
+    document.getElementById("modal").classList.add("active");
+
+
+
+}
+
+
+
+function closeCard()
+
+
+
+{
+
+
+
+    document.getElementById("modal").classList.remove("active");
+
+
+
+}
+
+
+
+function burstFlowers() {
+
+
+
+    const bouquet = document.getElementById("flowerBouquet");
+
+
+
+    if (!bouquet) return;
+
+
+
+
+
+
+
+    const rect = bouquet.getBoundingClientRect();
+
+
+
+    const centerX = rect.left + rect.width / 2;
+
+
+
+    const centerY = rect.top + rect.height / 2;
+
+
+
+
+
+
+
+    const flowers = [
+
+
+
+        "🌸", "🌷", "🌹", "🌼", "🌺",
+
+
+
+        "🪷", "💮", "🌻", "💖", "✨", "💕"
+
+
+
+    ];
+
+
+
+
+
+
+
+    bouquet.animate([
+
+
+
+        { transform: "scale(1)" },
+
+
+
+        { transform: "scale(1.15) rotate(-6deg)" },
+
+
+
+        { transform: "scale(.95) rotate(6deg)" },
+
+
+
+        { transform: "scale(1)" }
+
+
+
+    ], {
+
+
+
+        duration: 400,
+
+
+
+        easing: "ease-out"
+
+
+
+    });
+
+
+
+
+
+
+
+    for (let i = 0; i < 36; i++) {
+
+
+
+        const flower = document.createElement("span");
+
+
+
+        flower.className = "flying-flower";
+
+
+
+        flower.textContent =
+
+
+
+            flowers[Math.floor(Math.random() * flowers.length)];
+
+
+
+
+
+
+
+        flower.style.left = centerX + "px";
+
+
+
+        flower.style.top = centerY + "px";
+
+
+
+
+
+
+
+        const angle = Math.random() * Math.PI * 2;
+
+
+
+        const distance = 100 + Math.random() * 300;
+
+
+
+
+
+
+
+        flower.style.setProperty(
+
+
+
+            "--x",
+
+
+
+            Math.cos(angle) * distance + "px"
+
+
+
+        );
+
+
+
+
+
+
+
+        flower.style.setProperty(
+
+
+
+            "--y",
+
+
+
+            Math.sin(angle) * distance + "px"
+
+
+
+        );
+
+
+
+
+
+
+
+        flower.style.setProperty(
+
+
+
+            "--rotation",
+
+
+
+            (Math.random() * 720 - 360) + "deg"
+
+
+
+        );
+
+
+
+
+
+
+
+        flower.style.animationDelay =
+
+
+
+            Math.random() * .2 + "s";
+
+
+
+
+
+
+
+        document.body.appendChild(flower);
+
+
+
+
+
+
+
+        flower.addEventListener("animationend", () => flower.remove());
+
+
+
+    }
+
+
+
+
+
+
+
+    if (typeof celebrateMemories === "function") {
+
+
+
+        celebrateMemories(.6);
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+const flowerBouquet = document.getElementById("flowerBouquet");
+
+
+
+
+
+
+
+if (flowerBouquet) {
+
+
+
+    flowerBouquet.addEventListener("click", burstFlowers);
+
+
+
+
+
+
+
+    flowerBouquet.addEventListener("keydown", event => {
+
+
+
+        if (event.key === "Enter" || event.key === " ") {
+
+
+
+            event.preventDefault();
+
+
+
+            burstFlowers();
+
+
+
+        }
+
+
+
+    });
+
+
+
+}
+
+
+
+</script>
+
+
+
+ </body>
+
+
+
+</html>
